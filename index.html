@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Cloud Shell WEB</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+<!-- The user's header -->
+<div id="user-header">
+Logged in as X (signout)
+</div>
+
+<!-- Instance list -->
+<div id="instance-list-panel">
+</div>
+
+<!-- Information about an instance -->
+<div id="instance-info-panel">
+</div>
+
+<div id="templates">
+
+ <div id="template-instance-list-entry">
+  Instance ID: XXX<br/>
+  Account Type<br/>
+  RAM: XX, Disk: XX
+ </div>
+
+ <div class="template-instance-notes">
+   <!-- Load Notes -->
+   <ul>
+   <li>First X words...</li>
+   <li>Second X words...</li>
+   </ul>
+ </div>
+
+ <div id="template-instance">
+  Manage
+  Billing
+  History
+  Notes
+
+  <div class="instance-">
+ </div>
+
+  <div class="instance-control">
+  <form>
+   Status:
+   <select>
+    <option>Running</option>
+    <option>Reboot</option>
+    <option>Shutdown</option>
+    <option>Power-Off</option>
+    <option>Delete</option>
+   </select>
+  </form>
+  <hr/>
+  <div class="instance-info">
+   <!-- Information about this instance. -->
+   Plan: XXX
+   Memory (RAM): XX
+   Persistent Disk / Block Storage: XX
+   Operating System: XX
+
+   <!-- Runtime Statistics: -->
+   Uptime: XXX
+   CPU Utilization: XXX %
+   Disk I/O: XXX
+   (See History)
+  </div>
+
+  <div class="instance-settings">
+   Modify Settings
+   
+  </div>
+  <div class="instance-actions-running">
+   <!-- Information only available to a running instance (uptime, etc) -->
+
+  </div>
+  <div class="instance-actions-shutdown">
+   <!-- Actions for shutdown -->
+   Reimage
+  </div>
+ </div>
+ </div>
+</div>
+
+</body>
+</html>
