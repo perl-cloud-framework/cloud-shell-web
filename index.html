@@ -3,7 +3,7 @@
 <title>Cloud Shell WEB</title>
 <link rel="stylesheet" href="layout.css" type="text/css"></link>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
-<script type="text/javascript" src="js/jQuot2/jquery.jqote2.js"></script>
+<script type="text/javascript" src="js/jQote2/jquery.jqote2.js"></script>
 </head>
 
 <body>
@@ -25,53 +25,46 @@ Logged in as X (signout)
 You should never see this.
 </div>
 
-<div id="templates">
 
- <div id="template-instance-list-entry">
+<script type="text/html" id="template-instance-list-entry">
+<![CDATA[
  <li>
-  Instance ID: XXX<br/>
-  Account Type<br/>
-  RAM: XX, Disk: XX
+  Instance ID: <%= this.id %><br/>
+  <%= this.type %><br/>
+  RAM: <%= this.ram %>MB, Disk: <%= this.disk %>GB
  </li>
- </div>
+]]>
+</script>
 
- <div id="template-instance-null">
+<script type="text/html" id="template-instance-null">
+<![CDATA[
   Please select an instance.
 
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
-  Please select an instance.
- </div>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper erat. Duis pellentesque bibendum tortor eget dignissim. Morbi sapien ante, imperdiet et placerat eu, pellentesque a enim. Integer accumsan justo a dolor posuere fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec nunc purus, mollis sit amet varius in, vulputate nec velit. Mauris dui enim, vestibulum pellentesque imperdiet et, sodales quis augue. Nunc dapibus mi ut lorem tempus sit amet ornare quam aliquet. Mauris adipiscing lacinia diam in tincidunt. Pellentesque ultricies mi non sem fermentum vitae auctor sem cursus. Etiam malesuada dignissim felis, in congue enim pharetra ut. Ut vulputate congue nisi, in pellentesque orci adipiscing ullamcorper. Nulla bibendum rhoncus nulla vitae semper. Integer mollis, elit vel feugiat mollis, nulla dolor suscipit mi, ac vehicula metus ipsum id dui. Nunc sed dui venenatis arcu vestibulum iaculis in ac ligula. Suspendisse bibendum tortor eu quam dignissim hendrerit. In hac habitasse platea dictumst. Duis et eros dui. 
+]]>
+</script>
 
- <div class="template-instance-notes">
+<script type="text/html" id="template-instance-notes">
+<![CDATA[
    <!-- Load Notes -->
    <ul>
    <li>First X words...</li>
    <li>Second X words...</li>
    </ul>
- </div>
+]]>
+</script>
 
- <div id="template-instance">
+<script type="text/html" id="template-instance">
+<![CDATA[
   Manage
   Billing
   History
   Notes
+]]>
+</script>
 
-  <div class="instance-"></div>
- </div>
-
-  <div class="instance-control">
+<script type="text/html" id="instance-control">
+<![CDATA[
   <form>
    Status:
    <select>
@@ -95,9 +88,11 @@ You should never see this.
    CPU Utilization: XXX %
    Disk I/O: XXX
    (See History)
-  </div>
+]]>
+</script>
 
-  <div class="instance-settings">
+<script type="text/html" id="instance-settings">
+<![CDATA[
    Modify Settings
    
   </div>
@@ -110,8 +105,8 @@ You should never see this.
    Reimage
   </div>
  </div>
- </div>
-</div>
+]]>
+</script>
 
 <script type="text/javascript">
 
@@ -121,11 +116,25 @@ $(document).ready(function() {
 
 	/* The instance info panel will
 	   be initialized with the instance selector */
-	$('#template-instance-null').clone().appendTo(
-		$('#instance-info-panel').empty()
-	)
+	$('#instance-info-panel').empty().jqoteapp('#template-instance-null', { } );
 
-	$('#template-instance-list-entry').clone().appendTo('#instance-list-panel' )
+	/* Load the list of instances into the list panel */
+	$('#instance-list-panel').jqoteapp('#template-instance-list-entry', { 
+		id: 10,
+		type: 'Village Small',
+		ram: 96,
+		disk: 4
+	} )
+	.jqoteapp('#template-instance-list-entry', { 
+		id: 11,
+		type: 'Village Medium',
+		ram: 320,
+		disk: 8
+	} )
+	.find('li').click(function() {
+		$('#instance-info-panel').empty().jqoteapp('#template-instance',  { } );
+	});
+
 
 });
 </script>
