@@ -1,0 +1,22 @@
+ul, body, html {
+	margin: 0;
+	padding: 0;
+}
+
+#templates {
+	display: none;
+}
+
+#user-header {
+	float: right;
+	display: none;
+}
+
+#instance-list-panel {
+	height: 100%;
+	width: 25%;
+	background: #dfdfdf;
+	margin: 0;
+	padding: 0;
+	max-width: 15em;
+}
