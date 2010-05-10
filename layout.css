@@ -27,9 +27,13 @@ ul, body, html {
 	padding: 0;
 	max-width: 15em;
 	list-style: none;
-	border-right: 1px solid CornflowerBlue;
+	/*border-right: 1px solid CornflowerBlue;*/
 
 	overflow: auto;
+}
+
+#instance-list-panel ul {
+	/*background: Snow;*/
 }
 
 #instance-list-panel li:first-child {
@@ -38,21 +42,26 @@ ul, body, html {
 	border: 0;
 }
 #instance-list-panel li:last-child {
-	border: 0;
+	border-bottom: 0;
 }
 
 
 #instance-list-panel li {
 	padding: .5em;
 	/*border-top: 1px solid silver;*/
-	border-bottom: 1px solid Snow;
-	background: GhostWhite /*#dfdfff*/ ;
+	/*border-bottom: 1px solid Snow;*/
+	background: Lavender /*#dfdfff*/ ;
+	border-right: 1px solid silver;
 	color: black;
+	cursor: pointer;
+	margin-bottom: 1px;
+	/*-moz-border-radius-topleft: .5em;*/
+	-moz-border-radius-bottomleft: .75em;
 }
 
 #instance-info-panel {
 	/*display: block;*/
-	background: GhostWhite /*ThreeDLightShadow*/ /* #dadada */;
+	background: Snow /*ThreeDLightShadow*/ /* #dadada */;
 	/*width: 75%;*/
 	/*height: 100%;*/
 	
@@ -60,8 +69,9 @@ ul, body, html {
 }
 
 #instance-list-panel .clicked {
-	background: Lavender /* #cacaff */;
+	background: GhostWhite /* #cacaff */;
 	color: black;
+	border-right: 2px solid gold;
 }
 
 a {
