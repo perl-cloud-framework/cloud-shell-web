@@ -13,10 +13,32 @@ ul, body, html {
 }
 
 #instance-list-panel {
+	float: left;
 	height: 100%;
 	width: 25%;
-	background: #dfdfdf;
+	background: black;
+	color: white;
 	margin: 0;
 	padding: 0;
 	max-width: 15em;
+	list-style: none;
+}
+
+#instance-list-panel li:first-child {
+	background: inherit;
+	color: inherit;
+}
+
+#instance-list-panel li {
+	padding: .5em;
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
+	background: #dadaff;
+	color: black;
+}
+
+#instance-info-panel {
+	display: block;
+	background: #f0f0f0;
+	width: 100%;
 }
