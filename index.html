@@ -46,11 +46,29 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 
 <script type="text/html" id="template-instance-notes">
 <![CDATA[
-   <!-- Load Notes -->
-   <ul>
-   <li>First X words...</li>
-   <li>Second X words...</li>
-   </ul>
+<!-- Load Notes -->
+<h2>Notes</h2>
+<form onsubmit="
+	var ta=$(textarea).text;
+	var txt=ta.text();
+	ta.fadeOut();
+	pre.text(txt).fadeIn()
+">
+<a onclick="
+	var pre=$('pre');
+	$(pre).fadeOut(100, function() {
+		$('textarea').val($(pre).text()).parent().fadeIn();
+	});
+	//.fadeIn();
+">edit</a>
+<pre>
+<%= this.content %>
+</pre>
+<div class="hidden">
+<textarea></textarea>
+<button value="Done" onclick="submit()">Done</button>
+</div>
+</form>
 ]]>
 </script>
 
@@ -59,7 +77,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
   <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-control', { })">Manage</a>
   <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-billing', { })">Billing</a>
   <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-history', { })">History</a>
-  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#template-instance-notes', { })">Notes</a>
+  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#template-instance-notes', { content: 'Hello world' })">Notes</a>
 ]]>
 </script>
 
