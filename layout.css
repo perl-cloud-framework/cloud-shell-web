@@ -103,3 +103,10 @@ a {
 	float: right;
 }
 
+#footer {
+	text-align: right;
+	background: black;
+	color: white;
+}
+
+sup { font-size: xx-small; }

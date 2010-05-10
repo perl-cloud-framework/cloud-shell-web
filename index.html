@@ -29,7 +29,12 @@
 <div id="instance-info-panel">
 You should never see this.
 </div>
+
+<div id="footer">
+	Copyright &copy; 2010, GrokThis.net, VPS Village<sup>TM</sup>. All rights reserved.
 </div>
+
+</div><!-- /body -->
 
 <script type="text/html" id="template-container">
 <![CDATA[
@@ -149,7 +154,7 @@ $(document).ready(function() {
 	// Handler for .ready() called.
 
 	// Window height, minus header
-	var conheight=$(window).height()-$('#header').outerHeight();
+	var conheight=$(window).height()-$('#header').outerHeight()-$('#footer').outerHeight();
 
 	/* The instance info panel will
 	   be initialized with the instance selector */
