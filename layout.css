@@ -32,10 +32,6 @@ ul, body, html {
 	overflow: auto;
 }
 
-#instance-list-panel ul {
-	/*background: Snow;*/
-}
-
 #instance-list-panel li:first-child {
 	background: inherit;
 	color: inherit;
@@ -55,8 +51,10 @@ ul, body, html {
 	color: black;
 	cursor: pointer;
 	margin-bottom: 1px;
-	/*-moz-border-radius-topleft: .5em;*/
 	-moz-border-radius-bottomleft: .75em;
+	-webkit-border-bottom-left-radius: .75em;
+	-moz-user-select: none;
+	-khtml-user-select: none;
 }
 
 #instance-info-panel {
