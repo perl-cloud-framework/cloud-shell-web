@@ -7,21 +7,29 @@ ul, body, html {
 	display: none;
 }
 
+#body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
 #user-header {
-	float: right;
-	display: none;
+	height: 20em;
 }
 
 #instance-list-panel {
 	float: left;
 	height: 100%;
 	width: 25%;
-	background: black;
-	color: white;
+	background: Window /*black*/;
+	color: WindowText /*white*/;
 	margin: 0;
 	padding: 0;
 	max-width: 15em;
 	list-style: none;
+	border-right: 1px solid black;
+
+	overflow: auto;
 }
 
 #instance-list-panel li:first-child {
@@ -33,24 +41,29 @@ ul, body, html {
 	padding: .5em;
 	border-top: 1px solid silver;
 	border-bottom: 1px solid silver;
-	background: #dfdfff;
-	color: black;
+	background: Menu /*#dfdfff*/ ;
+	color: MenuText /*black*/;
 }
 
 #instance-info-panel {
-	display: block;
-	background: #cacaff;
-	width: 100%;
+	/*display: block;*/
+	background: ThreeDLightShadow /* #dadada */;
+	/*width: 75%;*/
 	height: 100%;
+	
+	overflow: auto;
+	padding: 1em;
 }
 
 #instance-list-panel .clicked {
-	background: #cacaff;
+	background: Highlight /* #cacaff */;
+	color: HighlightText;
 }
 
 a {
 	text-decoration: underline;
-	color: white;
+	background: Menu;
+	color: MenuText;
 	cursor: pointer;
 }
 
