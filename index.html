@@ -56,10 +56,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 
 <script type="text/html" id="template-instance">
 <![CDATA[
-  Manage
-  Billing
-  History
-  Notes
+  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-control', { })">Manage</a>
+  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-billing', { })">Billing</a>
+  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-history', { })">History</a>
+  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#template-instance-notes', { })">Notes</a>
 ]]>
 </script>
 
@@ -137,7 +137,7 @@ $(document).ready(function() {
 		$(this).addClass('clicked');
 
 		/* Load info panel */
-		$('#instance-info-panel').empty().jqoteapp('#template-instance',  { } );
+		$('#instance-info-panel').empty().jqoteapp('#template-instance',  { } ).jqoteapp('#instance-control', { })
 	});
 
 

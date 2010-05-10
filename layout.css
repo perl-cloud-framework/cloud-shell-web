@@ -47,3 +47,9 @@ ul, body, html {
 #instance-list-panel .clicked {
 	background: #cacaff;
 }
+
+a {
+	text-decoration: underline;
+	color: white;
+	cursor: pointer;
+}
