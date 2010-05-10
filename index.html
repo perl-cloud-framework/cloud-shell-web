@@ -132,6 +132,11 @@ $(document).ready(function() {
 		disk: 8
 	} )
 	.find('li').click(function() {
+		/* Toggle clicked */
+		$(this).parent().children().removeClass('clicked');
+		$(this).addClass('clicked');
+
+		/* Load info panel */
 		$('#instance-info-panel').empty().jqoteapp('#template-instance',  { } );
 	});
 
