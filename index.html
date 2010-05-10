@@ -25,6 +25,15 @@ Logged in as X (signout)
 You should never see this.
 </div>
 
+<script type="text/html" id="template-container">
+<![CDATA[
+<div class="<%= this.class %>">
+<%= this.content %>
+</div>
+]]>
+</script>
+
+
 
 <script type="text/html" id="template-instance-list-entry">
 <![CDATA[
@@ -74,10 +83,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 
 <script type="text/html" id="template-instance">
 <![CDATA[
-  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-control', { })">Manage</a>
-  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-billing', { })">Billing</a>
-  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#instance-history', { })">History</a>
-  <a onclick="$('#instance-info-panel').empty().jqoteapp('#template-instance').jqoteapp('#template-instance-notes', { content: 'Hello world' })">Notes</a>
+  <a onclick="loadTinstance('#instance-control')">Manage</a>
+  <a onclick="loadTinstance('#instance-billing')">Billing</a>
+  <a onclick="loadTinstance('#instance-history')">History</a>
+  <a onclick="loadTinstance('#template-instance-notes')">Notes</a>
 ]]>
 </script>
 
@@ -155,11 +164,18 @@ $(document).ready(function() {
 		$(this).addClass('clicked');
 
 		/* Load info panel */
-		$('#instance-info-panel').empty().jqoteapp('#template-instance',  { } ).jqoteapp('#instance-control', { })
+		//$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#instance-control', { });
+		//$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#template-container', { class: 'hidden', content: $('#instance-control').jqote({ }) } ).children().fadeIn();
+		loadTinstance($('#instance-control'));
 	});
 
 
 });
+
+function loadTinstance (content) {
+$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#template-container', { class: 'hidden', content: $(content).jqote({ }) } ).children().fadeIn()
+}
+
 </script>
 
 </body>
