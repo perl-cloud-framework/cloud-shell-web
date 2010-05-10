@@ -11,9 +11,12 @@
 <!-- The user's header -->
 <div id="body">
 
-<!--<div id=user-header">
-Logged in as X (signout)
-</div>-->
+<div id="header">
+	<img id="logo" src="logo.png" />
+	<div id="user-info">
+	Logged in as X (<a id="signout">sign out</a>)
+	</div>
+</div>
 
 <!-- Instance list -->
 <div id="instance-list-panel">
@@ -145,9 +148,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 $(document).ready(function() {
 	// Handler for .ready() called.
 
+	// Window height, minus header
+	var conheight=$(window).height()-$('#header').outerHeight();
+
 	/* The instance info panel will
 	   be initialized with the instance selector */
-	$('#instance-info-panel').empty().jqoteapp('#template-instance-null', { } );
+	$('#instance-info-panel').jqotesub("#template-container", { content: $('#template-instance-null').jqote( { } ), class: 'padded' })
+		.css("height",conheight);
 
 	/* Load the list of instances into the list panel */
 	$('#instance-list-panel').jqoteapp('#template-instance-list-entry', { 
@@ -162,6 +169,7 @@ $(document).ready(function() {
 		ram: 320,
 		disk: 8
 	} )
+	.css("height",conheight)
 	.find('li').click(function() {
 		/* Toggle clicked */
 		$(this).parent().children().removeClass('clicked');
@@ -177,7 +185,7 @@ $(document).ready(function() {
 });
 
 function loadTinstance (content) {
-$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#template-container', { class: 'hidden', content: $(content).jqote({ }) } ).children().fadeIn()
+$('#instance-info-panel').jqotesub('#template-container', { class: 'padded', content: $('#template-instance').jqote( { } ) } ).jqoteapp('#template-container', { class: 'padded hidden', content: $(content).jqote({ }) } ).children().fadeIn()
 }
 
 </script>
