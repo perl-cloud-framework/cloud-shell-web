@@ -209,6 +209,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 	<li>IPv4 Addresses: XX (manage)</li>
 	<li>IPv6 Subnet: 2001::/64</li>
 	</ul>
+
 	</div>
 
 	<div class="leftcol">
@@ -221,14 +222,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 	<li>Operating System:<br/>unknown (<a id="osselect">change</a>)</li>
 	<li>Boot Loader:<br/>xen-pv (<a id="bootselect">change</a>)</li>
 	</ul>
-	</div>
+	</div> 
   </div>
 
-  <div class="instance-controls">
-   <button>Access Serial Console</button>
-   <button>(Re-)Install Operating System</button>
+  <div class="instance-controls" style="min-height: 5em; padding-top: 1em;">
+   <div style="width: 48%; float: right;">
+   <button>Install Operating System</button>
+   <button>Change Kernel / Bootloader</button>
    <button>Modify IP Addresses</button>
+   </div>
+   <div style="width: 48%; height: 2em;">
+   <button style="height: 5em;">Access Serial Console</button>
+   </div>
   </div>
+
+
 
 
 ]]>
