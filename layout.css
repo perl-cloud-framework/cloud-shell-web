@@ -110,3 +110,20 @@ a {
 }
 
 sup { font-size: xx-small; }
+
+.instance-info ul {
+	list-style: none;
+}
+.instance-info ul li:first-child {
+	font-weight: bold;
+}
+
+.instance-controls {
+	padding-top: 1em;
+}
+.instance-controls button {
+	width: 100%;
+}
+
+.leftcol { width: 48%; }
+.rightcol { float: right; }

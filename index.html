@@ -126,17 +126,41 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
   </form>
   <hr/>
   <div class="instance-info">
-   <!-- Information about this instance. -->
-   Plan: XXX
-   Memory (RAM): XX
-   Persistent Disk / Block Storage: XX
-   Operating System: XX
+	<div class="rightcol">
+	<ul>
+	<li>Runtime Statistics (history)</li>
+	<li>Uptime: XXX</li>
+	<li>CPU Utilization: XXX %</li>
+	<li>Disk I/O: XXX</li>
+	</ul>
 
-   <!-- Runtime Statistics: -->
-   Uptime: XXX
-   CPU Utilization: XXX %
-   Disk I/O: XXX
-   (See History)
+	<ul>
+	<li>Network Information</li>
+	   <!-- Information about this instance. -->
+	<li>IPv4 Addresses: XX (manage)</li>
+	<li>IPv6 Addresses: XX (manage)</li>
+	</ul>
+	</div>
+
+	<div class="leftcol">
+	<ul>
+	<li>Instance Settings</li>
+	   <!-- Information about this instance. -->
+	<li>Plan: XXX</li>
+	<li>Memory (RAM): <span id="memslider-val"></span><div id="memslider"></div></li>
+	<li>Persistent Storage: <span id="diskslider-val"></span><div id="diskslider"></div></li>
+	<li>Operating System:<br/>unknown (<a id="osselect">change</a>)</li>
+	</ul>
+	</div>
+  </div>
+
+  <div class="instance-controls">
+   <button>Access Serial Console</button>
+   <button>(Re-)Install Operating System</button>
+   <button>Modify IP Addresses</button>
+  </div>
+
+
 ]]>
 </script>
 
@@ -214,6 +238,14 @@ $(document).ready(function() {
 			load: function(event, ui) {
 			 var name=$.data(ui.tab, 'load.tabs');
 			 $('#'+ui.panel.id).jqotesub('#template-'+name, {});
+			 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
+				$('#memslider-val').text(ui.value+" MB");
+				return true;
+			 } } );
+			 $('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event, ui) {
+				$('#diskslider-val').text(ui.value+" GB");
+				return true;
+			} } );
 			 return true;
 			}
 		}).load();
