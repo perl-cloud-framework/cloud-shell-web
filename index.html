@@ -103,8 +103,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
   <div id="tabs">
    <ul>
    <li><a href="instance-control"><span>Manage</span></a></li>
-   <li><a href="instance-billing"><span>Billing</span></a></li>
-   <li><a href="instance-history"><span>History</span></a></li>
+   <li><a href="instance-access"><span>Access</span></a></li>
+   <li><a href="instance-security"><span>Security</span></a></li>
+   <!--<li><a href="instance-billing"><span>Billing</span></a></li>-->
+   <!--<li><a href="instance-history"><span>History</span></a></li>-->
+   <li><a href="instance-backups"><span>Backups</span></a></li>
    <li><a href="instance-notes"><span>Notes</span></a></li>
    <li><a href="instance-scripts"><span>Scripts</span></a></li>
    </ul>
@@ -112,6 +115,47 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
   </div>
 ]]>
 </script>
+
+<script type="text/html" id="template-instance-backups">
+<![CDATA[
+ <h2>Archives</h2>
+ <table>
+ <tr>
+  <th>Archive Description</th>
+  <th>Date</th>
+  <th>Size</th>
+ </tr>
+ <tr>
+  <td>Example</td><td>1970-1-1</td><td>10GB</td><td><a>Download</a> <a>Send to...</a></td>
+ </tr>
+ </table>
+ <button>Schedule</button>
+ <button>Create new</button>
+
+]]>
+</script>
+
+
+<script type="text/html" id="template-instance-security">
+<![CDATA[
+ <button>Anti-Virus Scan</button>
+ <button>Secure-Disk Wipe</button>
+ <button>IP Transit Report</button>
+]]>
+</script>
+
+<script type="text/html" id="template-instance-access">
+<![CDATA[
+ Username: <%= this.user %><br/>
+ <button>Change Password</button>
+ <hr/>
+ SSH Keys:<br/>
+ <table>
+ <tr><th>Key Description</th><th>Type</th><th>Length</th></tr>
+ </table>
+ <button>Paste new key</button>  
+ <button>Upload new key</button>  
+]]>
 
 <script type="text/html" id="template-instance-scripts">
 <![CDATA[
@@ -138,14 +182,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 <script type="text/html" id="template-instance-control">
 <![CDATA[
   <form>
-   Status:
-   <select>
+   <span title="Disabled options may become available by changing the status">Status: Running
+   <!--<select>
     <option>Running</option>
     <option>Reboot</option>
     <option>Shutdown</option>
     <option>Power-Off</option>
     <option>Delete</option>
-   </select>
+   </select>-->
+   </span>
   </form>
   <hr/>
   <div class="instance-info">
