@@ -98,21 +98,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 
 <script type="text/html" id="template-instance">
 <![CDATA[
+  <div class="padded">
   <h2>Instance ID: </h2>
   <div id="tabs">
    <ul>
-   <li><a href="#instance-control"><span>Manage</span></a></li>
-   <li><a href="#template-instance-notes"><span>Notes</span></a></li>
+   <li><a href="instance-control"><span>Manage</span></a></li>
+   <li><a href="instance-billing"><span>Billing</span></a></li>
+   <li><a href="instance-history"><span>History</span></a></li>
+   <li><a href="instance-notes"><span>Notes</span></a></li>
    </ul>
   </div>
-  <a onclick="loadTinstance('#instance-control')">Manage</a>
-  <a onclick="loadTinstance('#instance-billing')">Billing</a>
-  <a onclick="loadTinstance('#instance-history')">History</a>
-  <a onclick="loadTinstance('#template-instance-notes')">Notes</a>
+  </div>
 ]]>
 </script>
 
-<script type="text/html" id="instance-control">
+<script type="text/html" id="template-instance-control">
 <![CDATA[
   <form>
    Status:
@@ -208,25 +208,21 @@ $(document).ready(function() {
 		$(this).addClass('clicked');
 
 		/* Load info panel */
-		//$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#instance-control', { });
-		//$('#instance-info-panel').jqotesub('#template-instance',  { } ).jqoteapp('#template-container', { class: 'hidden', content: $('#instance-control').jqote({ }) } ).children().fadeIn();
-		loadTinstance($('#instance-control'));
+		$('#instance-info-panel').jqotesub($('#template-instance'), {}).find("#tabs").tabs( {
+			/* Tried using select, but this makes it easier to run load() against this,
+			   allowing a default initalization of the tab... */
+			load: function(event, ui) {
+			 var name=$.data(ui.tab, 'load.tabs');
+			 $('#'+ui.panel.id).jqotesub('#template-'+name, {});
+			 return true;
+			}
+		}).load();
+
 		return false;
 	});
 
 
 });
-
-function loadTinstance (content) {
-$('#instance-info-panel').jqotesub('#template-container', { class: 'padded', content: $('#template-instance').jqote( { } ) } ).jqoteapp('#template-container', { class: 'padded hidden', content: $(content).jqote({ }) } ).children().fadeIn().find("#tabs").tabs( {
-	select: function(event, ui) {
-	 //loadTinstance(ui.tab.attr("href"));
-	 loadTinstance($.data(ui.tab, 'load.tabs'));
-	 return true;
-	} 
-});
-
-}
 
 </script>
 
