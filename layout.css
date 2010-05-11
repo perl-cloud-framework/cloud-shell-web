@@ -127,3 +127,13 @@ sup { font-size: xx-small; }
 
 .leftcol { width: 48%; }
 .rightcol { float: right; }
+
+#instance-scripts table {
+	width: 100%;
+	border: 1px inset silver;
+}
+#instance-scripts table th {
+	text-align: left;
+	font-weight: bold;
+	background: #dadada;
+}

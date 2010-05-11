@@ -62,7 +62,7 @@ You should never see this.
 
 <script type="text/html" id="template-instance-null">
 <![CDATA[
-  Please select an instance.<hr/>
+  Please select an instance from the left-hand navigation.<hr/>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper erat. Duis pellentesque bibendum tortor eget dignissim. Morbi sapien ante, imperdiet et placerat eu, pellentesque a enim. Integer accumsan justo a dolor posuere fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec nunc purus, mollis sit amet varius in, vulputate nec velit. Mauris dui enim, vestibulum pellentesque imperdiet et, sodales quis augue. Nunc dapibus mi ut lorem tempus sit amet ornare quam aliquet. Mauris adipiscing lacinia diam in tincidunt. Pellentesque ultricies mi non sem fermentum vitae auctor sem cursus. Etiam malesuada dignissim felis, in congue enim pharetra ut. Ut vulputate congue nisi, in pellentesque orci adipiscing ullamcorper. Nulla bibendum rhoncus nulla vitae semper. Integer mollis, elit vel feugiat mollis, nulla dolor suscipit mi, ac vehicula metus ipsum id dui. Nunc sed dui venenatis arcu vestibulum iaculis in ac ligula. Suspendisse bibendum tortor eu quam dignissim hendrerit. In hac habitasse platea dictumst. Duis et eros dui. 
 ]]>
@@ -106,11 +106,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
    <li><a href="instance-billing"><span>Billing</span></a></li>
    <li><a href="instance-history"><span>History</span></a></li>
    <li><a href="instance-notes"><span>Notes</span></a></li>
+   <li><a href="instance-scripts"><span>Scripts</span></a></li>
    </ul>
   </div>
   </div>
 ]]>
 </script>
+
+<script type="text/html" id="template-instance-scripts">
+<![CDATA[
+ <div id="instance-scripts">
+ <h2>Saved Scripts</h2>
+ <table>
+  <tr>
+  <th>Name</th>
+  <th>Language</th>
+  <th>Size</th>
+  <th><!-- Actions --></th>
+  </tr>
+  <%= this.scripts %>
+ </table>
+
+ <button>Scheduler</button>
+ <button>Find scripts</button>
+ <button>Upload new script</button>
+ </div>
+]]>
+</script>
+
 
 <script type="text/html" id="template-instance-control">
 <![CDATA[
@@ -150,6 +173,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent semper semper 
 	<li>Memory (RAM): <span id="memslider-val"></span><div id="memslider"></div></li>
 	<li>Persistent Storage: <span id="diskslider-val"></span><div id="diskslider"></div></li>
 	<li>Operating System:<br/>unknown (<a id="osselect">change</a>)</li>
+	<li>Boot Loader:<br/>xen-pv (<a id="bootselect">change</a>)</li>
 	</ul>
 	</div>
   </div>
