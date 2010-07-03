@@ -182,7 +182,13 @@ You should never see this.
 <![CDATA[
   <form>
    Instance id: <%= this.instance %><br/>
-   <span title="Disabled options may become available by changing the status">Status: Running
+   <span title="Disabled options may become available by changing the status">Status: <span id="instance-control-status">FETCHING...</span>
+   <% $.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
+	function(d){
+		$('#instance-control-status').html((d.r[0])?'Running':'Shutdown');
+	}
+	);
+   %>
    <!--<select>
     <option>Running</option>
     <option>Reboot</option>
