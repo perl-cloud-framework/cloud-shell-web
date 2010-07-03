@@ -52,7 +52,7 @@ You should never see this.
 
 <script type="text/html" id="template-instance-list-entry">
 <![CDATA[
- <li>
+ <li title="<%= this.id %>">
   <u><%= this.type %></u><br/>
   Instance ID: <%= this.id %><br/>
   RAM: <%= this.ram %>MB, Disk: <%= "this.disk" %>GB
@@ -98,7 +98,7 @@ You should never see this.
 <script type="text/html" id="template-instance">
 <![CDATA[
   <div class="padded">
-  <h2>Instance ID: </h2>
+  <h2>Instance ID: <%= this.instance %></h2>
   <div id="tabs">
    <ul>
    <li><a href="instance-control"><span>Manage</span></a></li>
@@ -181,6 +181,7 @@ You should never see this.
 <script type="text/html" id="template-instance-control">
 <![CDATA[
   <form>
+   Instance id: <%= this.instance %><br/>
    <span title="Disabled options may become available by changing the status">Status: Running
    <!--<select>
     <option>Running</option>
@@ -260,6 +261,7 @@ You should never see this.
 
 <script type="text/javascript">
 var baseurl="http://206.251.38.52/rest/";
+var currInstance;
 
 /**
  * Function : dump()
@@ -336,20 +338,26 @@ $(document).ready(function() {
 					type: data[key].description,
 					ram: data[key].memory
 					//disk: data[key].
-				} )
-				.css("height",conheight)
-				.find('li').click(function() {
+				/* Selector for the element we just added */
+				} ).children(':last').data('instance',data[key].id).click(function() {
 					/* Toggle clicked */
 					$(this).parent().children().removeClass('clicked');
 					$(this).addClass('clicked');
+					//currInstance = $(this).attr('id');
+					//alert($(this).attr('id'));
+					//alert($(this).data('instance-id'));
+					currInstance=$(this).data('instance');
 
 					/* Load info panel */
-					$('#instance-info-panel').jqotesub($('#template-instance'), {}).find("#tabs").tabs( {
+					$('#instance-info-panel').jqotesub($('#template-instance'), {
+						/* instance id */
+						instance: currInstance
+					}).data('instance', currInstance).find("#tabs").tabs( {
 						/* Tried using select, but this makes it easier to run load() against this,
 						   allowing a default initalization of the tab... */
 						load: function(event, ui) {
 						 var name=$.data(ui.tab, 'load.tabs');
-						 $('#'+ui.panel.id).jqotesub('#template-'+name, {});
+						 $('#'+ui.panel.id).jqotesub('#template-'+name, { });
 						 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
 							$('#memslider-val').text(ui.value+" MB");
 							return true;
@@ -364,39 +372,18 @@ $(document).ready(function() {
 
 					return false;
 				});
+
+
 			}
 		}
 	);
 
-	/* Configure the list-panel */
-	$('#instance-list-panel').css("height",conheight)
-	.find('li').click(function() {
-		/* Toggle clicked */
-		$(this).parent().children().removeClass('clicked');
-		$(this).addClass('clicked');
-
-		/* Load info panel */
-		$('#instance-info-panel').jqotesub($('#template-instance'), {}).find("#tabs").tabs( {
-			/* Tried using select, but this makes it easier to run load() against this,
-			   allowing a default initalization of the tab... */
-			load: function(event, ui) {
-			 var name=$.data(ui.tab, 'load.tabs');
-			 $('#'+ui.panel.id).jqotesub('#template-'+name, {});
-			 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
-				$('#memslider-val').text(ui.value+" MB");
-				return true;
-			 } } );
-			 $('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event, ui) {
-				$('#diskslider-val').text(ui.value+" GB");
-				return true;
-			} } );
-			 return true;
-			}
-		}).load();
-
-		return false;
-	});
-
+	$('#instance-list-panel')
+		.css("height",conheight)
+		.find('li')
+		//$('#instance-list-panel')
+		//.children('li')
+		//.data('instance', data[key].id)
 
 });
 
