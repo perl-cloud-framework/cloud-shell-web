@@ -357,7 +357,7 @@ $(document).ready(function() {
 						   allowing a default initalization of the tab... */
 						load: function(event, ui) {
 						 var name=$.data(ui.tab, 'load.tabs');
-						 $('#'+ui.panel.id).jqotesub('#template-'+name, { });
+						 $('#'+ui.panel.id).jqotesub('#template-'+name, { instance: currInstance });
 						 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
 							$('#memslider-val').text(ui.value+" MB");
 							return true;
