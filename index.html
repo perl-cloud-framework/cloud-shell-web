@@ -55,7 +55,7 @@ You should never see this.
  <li>
   <u><%= this.type %></u><br/>
   Instance ID: <%= this.id %><br/>
-  RAM: <%= this.ram %>MB, Disk: <%= this.disk %>GB
+  RAM: <%= this.ram %>MB, Disk: <%= "this.disk" %>GB
  </li>
 ]]>
 </script>
@@ -259,6 +259,43 @@ You should never see this.
 </script>
 
 <script type="text/javascript">
+var baseurl="http://206.251.38.52/rest/";
+
+/**
+ * Function : dump()
+ * Arguments: The data - array,hash(associative array),object
+ *    The level - OPTIONAL
+ * Returns  : The textual representation of the array.
+ * This function was inspired by the print_r function of PHP.
+ * This will accept some data as the argument and return a
+ * text that will be a more readable version of the
+ * array/hash/object that is given.
+ * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
+ */
+function dump(arr,level) {
+	var dumped_text = "";
+	if(!level) level = 0;
+	
+	//The padding given at the beginning of the line.
+	var level_padding = "";
+	for(var j=0;j<level+1;j++) level_padding += "    ";
+	
+	if(typeof(arr) == 'object') { //Array/Hashes/Objects 
+		for(var item in arr) {
+			var value = arr[item];
+			
+			if(typeof(value) == 'object') { //If it is an array,
+				dumped_text += level_padding + "'" + item + "' ...\n";
+				dumped_text += dump(value,level+1);
+			} else {
+				dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+			}
+		}
+	} else { //Stings/Chars/Numbers etc.
+		dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+	}
+	return dumped_text;
+}
 
 function getURL (u) {
 	$.ajax({
@@ -290,19 +327,49 @@ $(document).ready(function() {
 		.css("height",conheight);
 
 	/* Load the list of instances into the list panel */
-	$('#instance-list-panel').jqoteapp('#template-instance-list-entry', { 
-		id: 10,
-		type: 'Village Small',
-		ram: 96,
-		disk: 4
-	} )
-	.jqoteapp('#template-instance-list-entry', { 
-		id: 11,
-		type: 'Village Medium',
-		ram: 320,
-		disk: 8
-	} )
-	.css("height",conheight)
+	$.getJSON(baseurl+'/instance?callback=?',
+		function(d) {
+			data=d.r;
+			for (key in data) {
+				$('#instance-list-panel').jqoteapp('#template-instance-list-entry', { 
+					id: data[key].id,
+					type: data[key].description,
+					ram: data[key].memory
+					//disk: data[key].
+				} )
+				.css("height",conheight)
+				.find('li').click(function() {
+					/* Toggle clicked */
+					$(this).parent().children().removeClass('clicked');
+					$(this).addClass('clicked');
+
+					/* Load info panel */
+					$('#instance-info-panel').jqotesub($('#template-instance'), {}).find("#tabs").tabs( {
+						/* Tried using select, but this makes it easier to run load() against this,
+						   allowing a default initalization of the tab... */
+						load: function(event, ui) {
+						 var name=$.data(ui.tab, 'load.tabs');
+						 $('#'+ui.panel.id).jqotesub('#template-'+name, {});
+						 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
+							$('#memslider-val').text(ui.value+" MB");
+							return true;
+						 } } );
+						 $('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event, ui) {
+							$('#diskslider-val').text(ui.value+" GB");
+							return true;
+						} } );
+						 return true;
+						}
+					}).load();
+
+					return false;
+				});
+			}
+		}
+	);
+
+	/* Configure the list-panel */
+	$('#instance-list-panel').css("height",conheight)
 	.find('li').click(function() {
 		/* Toggle clicked */
 		$(this).parent().children().removeClass('clicked');
