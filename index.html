@@ -183,12 +183,7 @@ You should never see this.
   <form>
    Instance id: <%= this.instance %><br/>
    <span title="Disabled options may become available by changing the status">Status: <span id="instance-control-status">FETCHING...</span>
-   <% $.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
-	function(d){
-		$('#instance-control-status').html((d.r[0])?'Running':'Shutdown');
-	}
-	);
-   %>
+
    <!--<select>
     <option>Running</option>
     <option>Reboot</option>
@@ -203,17 +198,21 @@ You should never see this.
 	<div class="rightcol">
 	<ul>
 	<li>Runtime Averages (history)</li>
-	<li>Uptime: XXX</li>
-	<li>CPU Utilization: XXX %</li>
+	<li>Uptime: <span id="instance-control-uptime">FETCHING...</span></li>
+	<!--<li>CPU Utilization: XXX %</li>
 	<li>Network I/O: XXX %</li>
-	<li>Disk I/O: XXX</li>
+	<li>Disk I/O: XXX</li>-->
 	</ul>
 
 	<ul>
 	<li>Network Information</li>
-	   <!-- Information about this instance. -->
-	<li>IPv4 Addresses: XX (manage)</li>
-	<li>IPv6 Subnet: 2001::/64</li>
+	<!-- Information about this instance. -->
+	<li>IPv4 Addresses: (manage)<br/>
+		<select id="instance-control-ip4" multiple="multiple">
+			<option>FETCHING...</option>
+		</select>
+	</li>
+	<li>IPv6 Subnet: <span id="instance-control-ip6">FETCHING...</span></li>
 	</ul>
 
 	</div>
@@ -221,12 +220,18 @@ You should never see this.
 	<div class="leftcol">
 	<ul>
 	<li>Instance Settings</li>
-	   <!-- Information about this instance. -->
-	<li>Plan: XXX</li>
-	<li>Memory (RAM): <span id="memslider-val"></span><div id="memslider"></div></li>
+	<!-- Information about this instance. -->
+	<li>Plan: <span id="instance-control-plan">FETCHING...</span></li>
+	<li>Memory (RAM): <span id="memslider-val">FETCHING...</span><div id="memslider"></div></li>
 	<li>Persistent Storage: <span id="diskslider-val"></span><div id="diskslider"></div></li>
-	<li>Operating System:<br/>unknown (<a id="osselect">change</a>)</li>
-	<li>Boot Loader:<br/>xen-pv (<a id="bootselect">change</a>)</li>
+	</ul>
+	</div>
+
+	<div class="leftcol">
+	<ul>
+	<li>OS &amp; Kernel Settings</li>
+	<li>Boot Loader: <span id="instance-control-bootloader">FETCHING...</span> (<a id="bootselect">change</a>)</li>
+	<li>Operating System: <span id="instance-control-os">FETCHING...</span></li>
 	</ul>
 	</div> 
   </div>
@@ -243,8 +248,39 @@ You should never see this.
   </div>
 
 
-
-
+<%
+$.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
+	function(d){
+		$('#instance-control-status').html((d.r[0])?'Running':'Shutdown');
+	}
+);
+$.getJSON(baseurl+'/instance/'+this.instance+'/info?callback=?',
+	function(d){
+		$('#instance-control-plan').html(d.r[0].plan);
+		$('#memslider-val').html(d.r[0].memory+' MB');
+		var ip4array=d.r[0].ip4.split(" ");
+		$('#instance-control-ip4').children().remove();
+		for (var i in ip4array) {
+			$('#instance-control-ip4').html("<option>"+ip4array[i]+"</option>");
+		}
+		$('#instance-control-ip6').html(d.r[0].ip6);
+		$('#instance-control-bootloader').html(d.r[0].boot_method);
+	}
+);
+$.getJSON(baseurl+'/instance/'+this.instance+'/uptime?callback=?',
+	function(d){
+		$('#instance-control-uptime').html(d.raw);
+	}
+);
+$('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
+$('#memslider-val').text(ui.value+" MB");
+	return true;
+} } );
+$('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event, ui) {
+	$('#diskslider-val').text(ui.value+" GB");
+	return true;
+} } );
+%>
 ]]>
 </script>
 
@@ -364,14 +400,7 @@ $(document).ready(function() {
 						load: function(event, ui) {
 						 var name=$.data(ui.tab, 'load.tabs');
 						 $('#'+ui.panel.id).jqotesub('#template-'+name, { instance: currInstance });
-						 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
-							$('#memslider-val').text(ui.value+" MB");
-							return true;
-						 } } );
-						 $('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event, ui) {
-							$('#diskslider-val').text(ui.value+" GB");
-							return true;
-						} } );
+
 						 return true;
 						}
 					}).load();
