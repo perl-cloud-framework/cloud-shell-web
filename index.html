@@ -16,7 +16,7 @@
 <div id="header">
 	<img id="logo" src="logo.png" />
 	<div id="user-info">
-	Logged in as X (<a id="signout" href="/manage/vps/logout.html">sign out</a>)
+		Logged in as <span id="body-user-login">&lt;Fetching Username&gt;</span> (<a id="signout" href="/manage/vps/logout.html">sign out</a>)
 	</div>
 </div>
 
@@ -214,7 +214,7 @@ You should never see this.
 			<option>FETCHING...</option>
 		</select>
 	</li>
-	<li>IPv6 Subnet: <span id="instance-control-ip6">FETCHING...</span></li>
+	<li>IPv6 Subnet: <br/><span id="instance-control-ip6">FETCHING...</span></li>
 	</ul>
 
 	</div>
@@ -264,9 +264,9 @@ $.getJSON(baseurl+'/instance/'+this.instance+'/info?callback=?',
 		$('#instance-control-ip4').children().remove();
 		for (var i in ip4array) {
 			$('#instance-control-ip4').html("<option>"+ip4array[i]+"</option>");
-		};
+		}
 		var ip6=d.r[0].ip6;
-		$('#instance-control-ip6').html(ip6.replace('/0000:/','::'));
+		$('#instance-control-ip6').html(ip6.replace(/(:0000)+/g,'::').replace(/:0+/g,':'));
 		$('#instance-control-bootloader').html(d.r[0].boot_method);
 	}
 );
@@ -376,6 +376,12 @@ $(document).ready(function() {
 	$('#instance-info-panel').jqotesub("#template-container", { content: $('#template-instance-null').jqote( { } ), class: 'padded' })
 	//$('#instance-info-panel').jqotesub(container, { content: $('#template-instance-null').jqote( { } ), class: 'padded' })
 		.css("height",conheight);
+
+	$.getJSON(baseurl+'/show/whoami?callback=?',
+		function(d) {
+			$('#body-user-login').html(d.r[0]);
+		}
+	);
 
 	/* Load the list of instances into the list panel */
 	$.getJSON(baseurl+'/instance?callback=?',
