@@ -3,6 +3,10 @@ ul, body, html {
 	padding: 0;
 }
 
+body {
+  font-size: 11pt;
+}
+
 #templates {
 	display: none;
 }
@@ -144,4 +148,10 @@ sup { font-size: xx-small; }
 
 .instance-control-status-button {
   display: none;
+  font-size: 1.25em;
 }
+#instance-control-status {
+  display: block;
+  text-align: right;
+}
+h2 { text-align: right; }

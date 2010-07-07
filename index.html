@@ -99,6 +99,17 @@ You should never see this.
 <![CDATA[
   <div class="padded">
   <h2>Instance ID: <%= this.instance %></h2>
+  <form>
+    <span id="instance-control-status" title="Disabled options may become available by changing the status">Status:
+     <span id="instance-control-status-fetching">&lt;FETCHING&gt;</span>
+     <button class="instance-control-status-button" id="instance-control-status-buttons-boot">Boot</button>
+     <span id="instance-control-status-buttons-shutdown">
+       <button class="instance-control-status-button" id="instance-control-status-buttons-reboot">Reboot</button>
+       <button class="instance-control-status-button" id="instance-control-status-buttons-shutdown">Shutdown</button>
+       <button class="instance-control-status-button" id="instance-control-status-buttons-poweroff">Power-off</button>
+     </span>
+   </span>
+  </form>
   <div id="tabs">
    <ul>
    <li><a href="instance-control"><span>Manage</span></a></li>
@@ -113,7 +124,22 @@ You should never see this.
    <li><a href="instance-scripts"><span>Scripts</span></a></li>-->
    </ul>
   </div>
-  </div>
+</div>
+<%
+$.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
+  function(d){
+    $('.instance-control-status-button').show();
+    $('#instance-control-status-fetching').hide();
+    if(d.r[0] == 1) {
+      $('#instance-control-status-buttons-boot').attr('disabled','disabled');
+      $('#instance-control-status-buttons-shutdown').children().attr('disabled','');
+    } else {
+      $('#instance-control-status-buttons-boot').attr('disabled','');
+      $('#instance-control-status-buttons-shutdown').children().attr('disabled','disabled');
+    }
+	}
+);
+%>
 ]]>
 </script>
 
@@ -182,25 +208,7 @@ You should never see this.
 
 <script type="text/html" id="template-instance-control">
 <![CDATA[
-  <form>
-   Instance id: <%= this.instance %><br/>
-   <span id="instance-control-status" title="Disabled options may become available by changing the status">Status:
-     <button class="instance-control-status-button" id="instance-control-status-buttons-boot">Boot</button>
-     <span id="instance-control-status-buttons-shutdown">
-       <button class="instance-control-status-button" id="instance-control-status-buttons-reboot">Reboot</button>
-       <button class="instance-control-status-button" id="instance-control-status-buttons-shutdown">Shutdown</button>
-       <button class="instance-control-status-button" id="instance-control-status-buttons-poweroff">Power-off</button>
-     </span>
 
-   <!--<select>
-    <option>Running</option>
-    <option>Reboot</option>
-    <option>Shutdown</option>
-    <option>Power-Off</option>
-    <option>Delete</option>
-   </select>-->
-   </span>
-  </form>
   <hr/>
   <div class="instance-info">
 	<div class="rightcol">
@@ -257,19 +265,7 @@ You should never see this.
 
 
 <%
-$.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
-  function(d){
-    if(d.r[0] == 1) {
-      $('.instance-control-status-button').show();
-      $('#instance-control-status-buttons-boot').attr('disabled','disabled');
-      $('#instance-control-status-buttons-shutdown').children().attr('disabled','');
-    } else {
-      $('.instance-control-status-button').show();
-      $('#instance-control-status-buttons-boot').attr('disabled','');
-      $('#instance-control-status-buttons-shutdown').children().attr('disabled','disabled');
-    }
-	}
-);
+
 $.getJSON(baseurl+'/instance/'+this.instance+'/info?callback=?',
 	function(d){
 		$('#instance-control-plan').html(d.r[0].plan);
