@@ -33,9 +33,12 @@ ul, body, html {
 }
 
 #instance-list-panel li:first-child {
-	background: inherit;
+	/*background: inherit;*/
+	background: CornflowerBlue;
 	color: inherit;
 	border: 0;
+	/*position: fixed;
+	margin-bottom: 5em;*/
 }
 #instance-list-panel li:last-child {
 	border-bottom: 0;

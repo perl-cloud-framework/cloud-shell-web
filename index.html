@@ -16,7 +16,7 @@
 <div id="header">
 	<img id="logo" src="logo.png" />
 	<div id="user-info">
-	Logged in as X (<a id="signout">sign out</a>)
+	Logged in as X (<a id="signout" href="/manage/vps/logout.html">sign out</a>)
 	</div>
 </div>
 
@@ -102,13 +102,15 @@ You should never see this.
   <div id="tabs">
    <ul>
    <li><a href="instance-control"><span>Manage</span></a></li>
-   <li><a href="instance-access"><span>Access</span></a></li>
-   <li><a href="instance-security"><span>Security</span></a></li>
+   <!--<li><a href="instance-access"><span>Access</span></a></li>
+   <li><a href="instance-security"><span>Security</span></a></li>-->
+
    <!--<li><a href="instance-billing"><span>Billing</span></a></li>-->
    <!--<li><a href="instance-history"><span>History</span></a></li>-->
-   <li><a href="instance-backups"><span>Backups</span></a></li>
+
+   <!--<li><a href="instance-backups"><span>Backups</span></a></li>
    <li><a href="instance-notes"><span>Notes</span></a></li>
-   <li><a href="instance-scripts"><span>Scripts</span></a></li>
+   <li><a href="instance-scripts"><span>Scripts</span></a></li>-->
    </ul>
   </div>
   </div>
@@ -262,14 +264,19 @@ $.getJSON(baseurl+'/instance/'+this.instance+'/info?callback=?',
 		$('#instance-control-ip4').children().remove();
 		for (var i in ip4array) {
 			$('#instance-control-ip4').html("<option>"+ip4array[i]+"</option>");
-		}
-		$('#instance-control-ip6').html(d.r[0].ip6);
+		};
+		var ip6=d.r[0].ip6;
+		$('#instance-control-ip6').html(ip6.replace('/0000:/','::'));
 		$('#instance-control-bootloader').html(d.r[0].boot_method);
 	}
 );
 $.getJSON(baseurl+'/instance/'+this.instance+'/uptime?callback=?',
 	function(d){
-		$('#instance-control-uptime').html(d.raw);
+		if (d.r[0] == 1) {
+			$('#instance-control-uptime').html(d.raw);
+		} else {
+			$('#instance-control-uptime').html("Offline");
+		}
 	}
 );
 $('#memslider').slider( { step: 512, min: 512, max: 4096, slide: function (event, ui) {
@@ -302,8 +309,8 @@ $('#diskslider').slider( { step: 16, min: 16, max: 1024, slide: function (event,
 </script>
 
 <script type="text/javascript">
-var baseurl="http://206.251.38.52/rest/";
-var currInstance;
+	var baseurl="https://secure.grokthis.net/manage/vps/rest2/";
+	var currInstance;
 
 /**
  * Function : dump()
@@ -415,7 +422,7 @@ $(document).ready(function() {
 
 	$('#instance-list-panel')
 		.css("height",conheight)
-		.find('li')
+		.find('li');
 		//$('#instance-list-panel')
 		//.children('li')
 		//.data('instance', data[key].id)
