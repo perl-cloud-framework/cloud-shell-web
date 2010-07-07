@@ -137,3 +137,7 @@ sup { font-size: xx-small; }
 	font-weight: bold;
 	background: #dadada;
 }
+
+#instance-control-ip4 {
+	min-width: 10em;
+}
