@@ -141,3 +141,7 @@ sup { font-size: xx-small; }
 #instance-control-ip4 {
 	min-width: 10em;
 }
+
+.instance-control-status-button {
+  display: none;
+}
