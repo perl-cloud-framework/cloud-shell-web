@@ -55,7 +55,7 @@ You should never see this.
  <li title="<%= this.id %>">
   <u><%= this.type %></u><br/>
   Instance ID: <%= this.id %><br/>
-  RAM: <%= this.ram %>MB, Disk: <%= "this.disk" %>GB
+  RAM: <%= this.ram %>MB, Disk: <%= this.disk %>GB
  </li>
 ]]>
 </script>
@@ -241,7 +241,7 @@ $.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
 	<li>Instance Settings</li>
 	<!-- Information about this instance. -->
 	<li>Plan: <span id="instance-control-plan">FETCHING...</span></li>
-	<li>Memory (RAM): <span id="memslider-val">FETCHING...</span><div id="memslider"></div></li>
+  <li>Memory (RAM): <span id="memslider-val">FETCHING...</span><div id="memslider"></div></li>
 	<li>Persistent Storage: <span id="diskslider-val"></span><div id="diskslider"></div></li>
 	</ul>
 	</div>
@@ -272,7 +272,8 @@ $.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
 $.getJSON(baseurl+'/instance/'+this.instance+'/info?callback=?',
 	function(d){
 		$('#instance-control-plan').html(d.r[0].plan);
-		$('#memslider-val').html(d.r[0].memory+' MB');
+    $('#memslider-val').html(d.r[0].memory+' MB');
+		$('#diskslider-val').html(d.r[0].block_storage+' GB');
 		var ip4array=d.r[0].ip4.split(" ");
 		$('#instance-control-ip4').children().remove();
 		for (var i in ip4array) {
@@ -404,8 +405,8 @@ $(document).ready(function() {
 				$('#instance-list-panel').jqoteapp('#template-instance-list-entry', { 
 					id: data[key].id,
 					type: data[key].description,
-					ram: data[key].memory
-					//disk: data[key].
+					ram: data[key].memory,
+					disk: data[key].block_storage
 				/* Selector for the element we just added */
 				} ).children(':last').data('instance',data[key].id).click(function() {
 					/* Toggle clicked */
