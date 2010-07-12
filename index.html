@@ -101,6 +101,7 @@ You should never see this.
   <h2>Instance ID: <%= this.instance %></h2>
   <form>
     <span id="instance-control-status" title="Disabled options may become available by changing the status">Status:
+     <span id="instance-control-status-status">&lt;FETCHING&gt;</span><br/>
      <span id="instance-control-status-fetching">&lt;FETCHING&gt;</span>
      <button class="instance-control-status-button" id="instance-control-status-buttons-boot">Boot</button>
      <span id="instance-control-status-buttons-shutdown">
@@ -131,9 +132,11 @@ $.getJSON(baseurl+'/instance/'+this.instance+'/status?callback=?',
     $('.instance-control-status-button').show();
     $('#instance-control-status-fetching').hide();
     if(d.r[0] == 1) {
+      $('#instance-control-status-status').html("Running");
       $('#instance-control-status-buttons-boot').attr('disabled','disabled');
       $('#instance-control-status-buttons-shutdown').children().attr('disabled','');
     } else {
+      $('#instance-control-status-status').html("Shutdown");
       $('#instance-control-status-buttons-boot').attr('disabled','');
       $('#instance-control-status-buttons-shutdown').children().attr('disabled','disabled');
     }
